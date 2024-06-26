@@ -1,0 +1,14 @@
+server:
+  port: 9001
+  servlet:
+    context-path: /f2x-bank/v1
+    
+spring:
+  profiles:
+    active: local
+    
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
