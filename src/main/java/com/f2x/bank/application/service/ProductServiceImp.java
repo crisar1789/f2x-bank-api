@@ -17,7 +17,7 @@ public class ProductServiceImp implements ProductServiceI {
 	@Override
 	public Product getProductById(Long id) {
 		return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class ProductServiceImp implements ProductServiceI {
 	@Override
 	public Product updateProduct(Long id, Product product) {
 		Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
 		existingProduct.setBalance(product.getBalance());
 		existingProduct.setGmfExempt(product.isGmfExempt());

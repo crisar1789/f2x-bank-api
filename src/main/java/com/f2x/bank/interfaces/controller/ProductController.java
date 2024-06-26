@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.f2x.bank.application.service.ProductServiceImp;
+import com.f2x.bank.application.service.ProductServiceI;
 import com.f2x.bank.domain.model.Product;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 public class ProductController {
 
 	@Autowired
-	private ProductServiceImp productService;
+	private ProductServiceI productService;
 	
 	@GetMapping("/{id}")
     public ResponseEntity<Product> getUserById(@PathVariable Long id) {

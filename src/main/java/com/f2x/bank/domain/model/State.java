@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.f2x.bank.domain.enums.AccountCode;
+import com.f2x.bank.domain.enums.StateCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,14 +22,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountType {
+public class State {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
 	@Enumerated(EnumType.STRING)
-    private AccountCode code;
+    private StateCode code;
     
     @Column(name = "name")
     private String name;

@@ -13,13 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "product")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 	
 	@Id
@@ -33,8 +37,9 @@ public class Product {
     @Column(name = "account_number")
     private String accountNumber;
     
-    @Column(name = "state")
-    private String state;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "state_id")
+    private State state;
     
     @Column(name = "balance")
     private BigDecimal balance;

@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.f2x.bank.application.service.UserServiceImp;
+import com.f2x.bank.application.service.UserServiceI;
 import com.f2x.bank.domain.model.User;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
 	@Autowired
-	private UserServiceImp userService;
+	private UserServiceI userService;
 	
 	@GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
