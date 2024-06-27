@@ -6,9 +6,3 @@ server:
 spring:
   profiles:
     active: local
-    
-springdoc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html

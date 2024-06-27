@@ -7,8 +7,11 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.f2x.bank.application.exception.F2XBankException;
 import com.f2x.bank.domain.enums.AccountCode;
 import com.f2x.bank.domain.model.Product;
+import com.f2x.bank.domain.model.State;
+import com.f2x.bank.domain.model.User;
 import com.f2x.bank.domain.repository.ProductRepository;
 
 @Service
@@ -17,25 +20,38 @@ public class ProductServiceImp implements ProductServiceI {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private UserServiceI userService;
+	
 	@Override
 	public Product getProductByAccountNumber(String accountNumber) {
 		
 		return productRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new F2XBankException("Product not found: ", accountNumber));
 	}
 
 	@Override
 	public Product createProduct(Product product) {
+		checkAccountType(product);
+		product.setUser(getUser(product.getUser()));
 		product.setAccountNumber(generateNewAccountNumber(product.getAccountType().getCode()));
+		product.setState(State.builder().id(Long.valueOf(1)).build());
 		product.setCreatedDate(LocalDateTime.now());
         return productRepository.save(product);
+	}
+	
+	private User getUser(User user) {
+		if (user == null) {
+			throw new F2XBankException("User have to be mandatory");
+		}
+		return userService.getUserByTypeAndNumberIdentification(user.getIdentificationType().getCode().getCode(), 
+				user.getIdentificationNumber());
 	}
 
 	@Override
 	public Product updateProduct(String accountNumber, Product product) {
-		Product existingProduct = productRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
+		Product existingProduct = getProductByAccountNumber(accountNumber);
+		
 		existingProduct.setBalance(product.getBalance());
 		existingProduct.setGmfExempt(product.isGmfExempt());
 		existingProduct.setState(product.getState());
@@ -47,6 +63,14 @@ public class ProductServiceImp implements ProductServiceI {
 	@Override
 	public void deleteProduct(Long id) {
 		productRepository.deleteById(id);
+	}
+	
+	private void checkAccountType(Product product) {
+		AccountCode type = AccountCode.valueOf(product.getAccountType().getCode().getCode());
+		
+		if(type == null) {
+			throw new F2XBankException("Invalid account type: ", product.getAccountType().getCode().getCode());
+		}
 	}
 	
 	private String generateNewAccountNumber(AccountCode accountType) {
