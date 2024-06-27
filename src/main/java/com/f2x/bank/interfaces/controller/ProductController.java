@@ -22,10 +22,16 @@ public class ProductController {
 	@Autowired
 	private ProductServiceI productService;
 	
-	@GetMapping("/{id}")
-    public ResponseEntity<Product> getUserById(@PathVariable Long id) {
-		Product product = productService.getProductById(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+	@GetMapping("/{accountNumber}")
+    public ResponseEntity<Object> getProductByAccountNumber(@PathVariable String accountNumber) {
+		ResponseEntity<Object> response = null;
+		try {
+			response = new ResponseEntity<>(productService.getProductByAccountNumber(accountNumber), HttpStatus.OK);
+		} catch(RuntimeException e) {
+			response = new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+		return response;
     }
 	
 	@PostMapping
@@ -34,9 +40,9 @@ public class ProductController {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateUser(@PathVariable Long id, @RequestBody Product product) {
-    	Product updatedProduct = productService.updateProduct(id, product);
+    @PutMapping("/{accountNumber}")
+    public ResponseEntity<Product> updateUser(@PathVariable String accountNumber, @RequestBody Product product) {
+    	Product updatedProduct = productService.updateProduct(accountNumber, product);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 

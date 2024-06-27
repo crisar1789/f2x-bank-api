@@ -11,13 +11,17 @@ import javax.persistence.Table;
 
 import com.f2x.bank.domain.enums.DocumentCode;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "document_type")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DocumentType {
 
 	@Id

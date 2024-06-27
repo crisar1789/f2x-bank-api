@@ -22,7 +22,7 @@ public class TransactionServiceImp implements TransactionServiceI {
 	@Override
 	public Transaction getTransactionById(Long id) {
 		return transactionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Transaction not found"));
 	}
 	
 	@Override
@@ -35,7 +35,8 @@ public class TransactionServiceImp implements TransactionServiceI {
 	private void updateProductBalance(Transaction transaction) {
 		
 		BigDecimal value = transaction.getValue();
-		Product origin = getProduct(transaction.getAccountOrigin().getId());
+		Product origin = getProduct(transaction.getAccountOrigin().getAccountNumber());
+		transaction.setAccountOrigin(origin);
 		
 		switch (transaction.getTransactionType().getCode()) {
 		case W:
@@ -47,7 +48,8 @@ public class TransactionServiceImp implements TransactionServiceI {
 			updateProduct(origin);
 			break;
 		case T:
-			Product destination = getProduct(transaction.getAccountDestination().getId());
+			Product destination = getProduct(transaction.getAccountDestination().getAccountNumber());
+			transaction.setAccountDestination(destination);
 			transfer(origin, destination, value);
 			updateProduct(origin);
 			updateProduct(destination);
@@ -57,8 +59,8 @@ public class TransactionServiceImp implements TransactionServiceI {
 		}
 	}
 	
-	private Product getProduct(Long id) {
-		return productService.getProductById(id);
+	private Product getProduct(String accountNumber) {
+		return productService.getProductByAccountNumber(accountNumber);
 	}
 	
 	private void withdraw(Product product, BigDecimal value) {
@@ -75,6 +77,6 @@ public class TransactionServiceImp implements TransactionServiceI {
 	}
 	
 	private void updateProduct(Product product) {
-		productService.updateProduct(product.getId(), product);
+		productService.updateProduct(product.getAccountNumber(), product);
 	}
 }

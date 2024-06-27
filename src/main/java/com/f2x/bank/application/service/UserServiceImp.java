@@ -23,7 +23,6 @@ public class UserServiceImp implements UserServiceI {
 	@Override
     public User createUser(User user) {
         user.setCreatedDate(LocalDateTime.now());
-        user.setUpdatedDate(LocalDateTime.now());
         return userRepository.save(user);
     }
 

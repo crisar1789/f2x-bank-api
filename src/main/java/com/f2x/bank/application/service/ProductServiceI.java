@@ -4,8 +4,8 @@ import com.f2x.bank.domain.model.Product;
 
 public interface ProductServiceI {
 
-	Product getProductById(Long id);
+	Product getProductByAccountNumber(String accountNumber);
 	Product createProduct(Product product);
-	Product updateProduct(Long id, Product product);
+	Product updateProduct(String accountNumber, Product product);
     void deleteProduct(Long id);
 }
