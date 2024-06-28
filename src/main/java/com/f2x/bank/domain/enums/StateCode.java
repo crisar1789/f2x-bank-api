@@ -1,24 +1,24 @@
 package com.f2x.bank.domain.enums;
 
 public enum StateCode {
-	A("Active"), I("Inactive"), C("Cacel"); 
+	A, I, C; 
 	
-	private final String name;
+	/*private final String code;
 	
-	private StateCode(String name) {
-		this.name = name;
+	private StateCode(String code) {
+		this.code = code;
 	}
 	
-	public String getName() {
-		return this.name;
+	public String getCode() {
+		return this.code;
 	}
 	
-	public static StateCode valueOfCode(String name) {
+	public static StateCode valueOfCode(String code) {
 	    for (StateCode e : values()) {
-	        if (e.name.equals(name)) {
+	        if (e.code.equals(code)) {
 	            return e;
 	        }
 	    }
 	    return null;
-	}
+	}*/
 }

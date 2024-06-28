@@ -9,16 +9,21 @@ import org.springframework.stereotype.Service;
 
 import com.f2x.bank.application.exception.F2XBankException;
 import com.f2x.bank.domain.enums.AccountCode;
+import com.f2x.bank.domain.enums.StateCode;
 import com.f2x.bank.domain.model.Product;
 import com.f2x.bank.domain.model.State;
 import com.f2x.bank.domain.model.User;
 import com.f2x.bank.domain.repository.ProductRepository;
+import com.f2x.bank.domain.repository.StateRepository;
 
 @Service
 public class ProductServiceImp implements ProductServiceI {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private StateRepository stateRepository;
 	
 	@Autowired
 	private UserServiceI userService;
@@ -35,7 +40,8 @@ public class ProductServiceImp implements ProductServiceI {
 		checkAccountType(product);
 		product.setUser(getUser(product.getUser()));
 		product.setAccountNumber(generateNewAccountNumber(product.getAccountType().getCode()));
-		product.setState(State.builder().id(Long.valueOf(1)).build());
+		State state = stateRepository.findByCode(StateCode.A).get();
+		product.setState(state);
 		product.setCreatedDate(LocalDateTime.now());
         return productRepository.save(product);
 	}

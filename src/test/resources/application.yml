@@ -1,0 +1,15 @@
+server:
+  port: 9001
+  servlet:
+    context-path: /f2x-bank/v1
+    
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/f2x_bank?serverTimezone=UTC
+    username: f2x
+    password: f2x_2024
+    
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none

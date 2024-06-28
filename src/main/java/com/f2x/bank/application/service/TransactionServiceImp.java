@@ -65,7 +65,7 @@ public class TransactionServiceImp implements TransactionServiceI {
 	}
 	
 	private void checkProducActive(Product product) {
-		if (!product.getState().getCode().getName().equals(StateCode.A.getName())) {
+		if (!product.getState().getCode().equals(StateCode.A)) {
 			throw new F2XBankException("Account is not Active: ", product.getAccountNumber());
 		}
 	}

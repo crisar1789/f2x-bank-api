@@ -38,7 +38,7 @@ public class TransactionController {
     }
 	
 	@PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody Transaction transaction) {
+    public ResponseEntity<Object> createTransaction(@RequestBody Transaction transaction) {
 		ResponseEntity<Object> response = null;
 		try {
 			response = new ResponseEntity<>(transactionService.createTransaction(transaction), HttpStatus.CREATED);
